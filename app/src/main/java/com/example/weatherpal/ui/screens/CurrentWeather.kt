@@ -40,6 +40,7 @@ fun backgroundCurrentWeather(){
 @Composable
 fun CurrentWeather(){
 
+
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize().padding(top = 100.dp),
