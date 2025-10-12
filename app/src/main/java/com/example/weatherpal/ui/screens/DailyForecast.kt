@@ -71,8 +71,8 @@ fun ForecastTable(forecastList: List<Forecast>?, unit: TemperatureUnit) {
             ) {
                 items(items = forecastList) { forecastItem ->
                     // Convert Celsius to Fahrenheit
-                    val high = if (unit == TemperatureUnit.CELSIUS) forecastItem.highTemp else toFahrenheit(forecastItem.highTemp.toInt())
-                    val low = if (unit == TemperatureUnit.CELSIUS) forecastItem.lowTemp else toFahrenheit(forecastItem.lowTemp.toInt())
+                    val high = if (unit == TemperatureUnit.CELSIUS) forecastItem.highTemp else toFahrenheit(forecastItem.highTemp)
+                    val low = if (unit == TemperatureUnit.CELSIUS) forecastItem.lowTemp else toFahrenheit(forecastItem.lowTemp)
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

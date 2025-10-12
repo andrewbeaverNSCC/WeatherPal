@@ -45,8 +45,8 @@ class MainViewModel : ViewModel(){
             forecast = listOf(
                 Forecast(
                     date = LocalDate.now().plusDays(1),
-                    highTemp = 20.0,
-                    lowTemp = 12.0,
+                    highTemp = 20,
+                    lowTemp = 12,
                     condition = "Sunny",
                     precipitationType = "None",
                     precipitationAmount = 0.0,
@@ -58,8 +58,8 @@ class MainViewModel : ViewModel(){
                 ),
                 Forecast(
                     date = LocalDate.now().plusDays(2),
-                    highTemp = 14.0,
-                    lowTemp = 8.0,
+                    highTemp = 14,
+                    lowTemp = 8,
                     condition = "Rain",
                     precipitationType = "Rain",
                     precipitationAmount = 5.2,
@@ -71,8 +71,8 @@ class MainViewModel : ViewModel(){
                 ),
                 Forecast(
                     date = LocalDate.now().plusDays(3),
-                    highTemp = 10.0,
-                    lowTemp = 8.0,
+                    highTemp = 10,
+                    lowTemp = 8,
                     condition = "Cloudy",
                     precipitationType = "None",
                     precipitationAmount = 0.0,
@@ -84,8 +84,8 @@ class MainViewModel : ViewModel(){
                 ),
                 Forecast(
                     date = LocalDate.now().plusDays(4),
-                    highTemp = 6.0,
-                    lowTemp = 2.0,
+                    highTemp = 6,
+                    lowTemp = 2,
                     condition = "Thunderstorms",
                     precipitationType = "Rain",
                     precipitationAmount = 7.1,
@@ -97,8 +97,8 @@ class MainViewModel : ViewModel(){
                 ),
                 Forecast(
                     date = LocalDate.now().plusDays(5),
-                    highTemp = 4.0,
-                    lowTemp = -2.0,
+                    highTemp = 4,
+                    lowTemp = -2,
                     condition = "Snow",
                     precipitationType = "Snow",
                     precipitationAmount = 12.0,

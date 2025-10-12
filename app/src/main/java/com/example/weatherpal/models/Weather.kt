@@ -23,9 +23,9 @@ data class Forecast(
     //Icon
     val weatherIcon: Int,
     //Temp high
-    val highTemp: Double,
+    val highTemp: Int,
     //Temp low
-    val lowTemp: Double,
+    val lowTemp: Int,
     //Condition
     val condition: String,
     //Precipitation type
