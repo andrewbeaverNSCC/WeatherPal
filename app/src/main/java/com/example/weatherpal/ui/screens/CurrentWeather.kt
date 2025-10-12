@@ -26,16 +26,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.size
 import com.example.weatherpal.R
+import com.example.weatherpal.TemperatureUnit
+import com.example.weatherpal.models.Current
+import com.example.weatherpal.models.Weather
 
 
 @Composable
-fun CurrentWeatherScreen(modifier: Modifier = Modifier) {
+fun CurrentWeatherScreen(weather: Weather?, unit: TemperatureUnit, modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize()) {
         Background()
         Title()
-        CurrentWeather()
+        CurrentWeather(current = weather?.current, unit = unit)
     }
 }
+
+// Convert Celsius to Fahrenheit
+// source: https://www.w3resource.com/kotlin-exercises/basic/kotlin-basic-exercise-11.php
+fun toFahrenheit(celsius: Int): Int {
+    return ((celsius * 9.0 / 5.0) + 32).toInt()
+}
+
 @Composable
 fun Background(){
     //Design the background of screen
@@ -72,18 +82,10 @@ fun Title(){
 }
 
 @Composable
-fun CurrentWeather(){
+fun CurrentWeather(current: Current?, unit: TemperatureUnit) {
 
-    val location = "Halifax, NS"
-    val temperature = "25"
-    val feelsLike = "28"
-    val condition = "Sunny"
-    val windSpeed = "10"
-    val windDirection = "North"
-    val precipitation = "Clear"
-    val icon = painterResource(R.drawable.sun)
-
-    Column (
+    if(current != null)
+        Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -100,23 +102,12 @@ fun CurrentWeather(){
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-
-        //Location
-        Text(
-            text = location,
-
-            style = TextStyle(
-                fontFamily = FontFamily.Serif,
-                fontWeight = Bold,
-                fontSize = 20.sp,
-                color = Color(0xFF0D47A1)
-            )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
         // Temperature
+        val temp = if (unit == TemperatureUnit.CELSIUS) current.temperature else toFahrenheit(current.temperature)
+        val feelsLike = if (unit == TemperatureUnit.CELSIUS) current.feelsLike else toFahrenheit(current.feelsLike)
+
         Text(
-            text = "$temperature°C",
+            text = "$temp°",
 
             style = TextStyle(
                 fontFamily = FontFamily.Serif,
@@ -128,14 +119,14 @@ fun CurrentWeather(){
         Spacer(modifier = Modifier.height(8.dp))
 
         Image(
-            painter = icon,
+            painter = painterResource(id = current.weatherIcon),
             contentDescription = "Weather condition icon",
             modifier = Modifier.size(100.dp)
         )
 
         //Feels like
         Text(
-            text = "Feels like $feelsLike°C",
+            text = "Feels like $feelsLike°",
 
             style = TextStyle(
                 fontFamily = FontFamily.Serif,
@@ -153,9 +144,9 @@ fun CurrentWeather(){
         )
         {
             val weatherInfo = listOf(
-                "Condition" to condition,
-                "Wind Speed" to windSpeed + " km/h " + windDirection,
-                "Precipitation" to precipitation
+                "Condition" to current.condition,
+                "Wind Speed" to "${current.windSpeed} km/h ${current.windDirection}",
+                "Precipitation" to current.precipitation
             )
             weatherInfo.forEach { (label, value) ->
                 Row(
