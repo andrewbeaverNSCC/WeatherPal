@@ -102,9 +102,14 @@ fun CurrentWeather(current: Current?, unit: TemperatureUnit) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Temperature
-        val temp = if (unit == TemperatureUnit.CELSIUS) current.temperature else toFahrenheit(current.temperature)
-        val feelsLike = if (unit == TemperatureUnit.CELSIUS) current.feelsLike else toFahrenheit(current.feelsLike)
+        // Temperature conversions
+        val temp = if (unit == TemperatureUnit.CELSIUS)
+            current.temperature
+        else toFahrenheit(current.temperature)
+
+        val feelsLike = if (unit == TemperatureUnit.CELSIUS)
+            current.feelsLike
+        else toFahrenheit(current.feelsLike)
 
         Text(
             text = "$temp°",
