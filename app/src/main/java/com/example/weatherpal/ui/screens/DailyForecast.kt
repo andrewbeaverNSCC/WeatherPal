@@ -28,9 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.format.DateTimeFormatter
 import androidx.compose.foundation.lazy.items
+import coil.compose.AsyncImage
 import com.example.weatherpal.TemperatureUnit
 import com.example.weatherpal.models.Weather
 import com.example.weatherpal.models.Forecast
+import com.example.weatherpal.models.ForecastDay
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,14 +41,14 @@ fun DailyForecastScreen(weather: Weather?, unit: TemperatureUnit){
     Box(modifier = Modifier.fillMaxSize()) {
         Background()
         Title()
-        ForecastTable(forecastList = weather?.forecast, unit = unit)
+        ForecastTable(forecastDayList = weather?.forecast?.forecastDay, unit = unit)
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ForecastTable(forecastList: List<Forecast>?, unit: TemperatureUnit) {
-    if (forecastList != null) {
+fun ForecastTable(forecastDayList: List<ForecastDay>?, unit: TemperatureUnit) {
+    if (forecastDayList != null) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize().padding(vertical = 8.dp),
@@ -69,10 +72,14 @@ fun ForecastTable(forecastList: List<Forecast>?, unit: TemperatureUnit) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                items(items = forecastList) { forecastItem ->
+                items(items = forecastDayList) { forecastDay ->
+
+                    // Access day object
+                    val day = forecastDay.day
+
                     // Convert Celsius to Fahrenheit
-                    val high = if (unit == TemperatureUnit.CELSIUS) forecastItem.highTemp else toFahrenheit(forecastItem.highTemp)
-                    val low = if (unit == TemperatureUnit.CELSIUS) forecastItem.lowTemp else toFahrenheit(forecastItem.lowTemp)
+                    val high = if (unit == TemperatureUnit.CELSIUS) day.highTemp.toInt() else toFahrenheit(day.highTemp)
+                    val low = if (unit == TemperatureUnit.CELSIUS) day.lowTemp.toInt() else toFahrenheit(day.lowTemp)
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,13 +88,13 @@ fun ForecastTable(forecastList: List<Forecast>?, unit: TemperatureUnit) {
                     ) {
                         //Date
                         Text(
-                            text = forecastItem.date.format(DateTimeFormatter.ofPattern("E dd")),
+                            text = LocalDate.parse(forecastDay.date).format(DateTimeFormatter.ofPattern("E dd")),
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
                         //Image
-                        Image(
-                            painter = painterResource(id = forecastItem.weatherIcon),
-                            contentDescription = forecastItem.condition,
+                        AsyncImage(
+                            model = "https:${day.condition.icon}",
+                            contentDescription = day.condition.text,
                             modifier = Modifier.size(48.dp).padding(bottom = 12.dp)
                         )
                         //Temps high then low
@@ -97,32 +104,32 @@ fun ForecastTable(forecastList: List<Forecast>?, unit: TemperatureUnit) {
                         )
                         //Condition
                         Text(
-                            text = forecastItem.condition,
+                            text = day.condition.text,
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
                         //Precipitation type
-                        Text(
-                            text = forecastItem.precipitationType,
-                            modifier = Modifier.padding(bottom = 12.dp)
-                        )
+//                        Text(
+//                            text = forecastItem.precipitationType,
+//                            modifier = Modifier.padding(bottom = 12.dp)
+//                        )
                         //Precipitation amount and probability
                         Text(
-                            text = "${forecastItem.precipitationAmount}mm (${forecastItem.precipitationProbability}%)",
+                            text = "${day.precipitationAmount}mm (${day.precipitationProbability}%)",
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
                         //Wind speed
                         Text(
-                            text = "${forecastItem.windSpeed} km/h",
+                            text = "${day.windSpeed} km/h",
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
                         //Wind direction
-                        Text(
-                            text = forecastItem.windDirection,
-                            modifier = Modifier.padding(bottom = 12.dp)
-                        )
+//                        Text(
+//                            text = day.windDirection,
+//                            modifier = Modifier.padding(bottom = 12.dp)
+//                        )
                         //Humidity
                         Text(
-                            text = "${forecastItem.humidity}% humidity",
+                            text = "${day.humidity}% humidity",
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
                     }

@@ -65,4 +65,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    // Retrofit GSON Converter
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 }

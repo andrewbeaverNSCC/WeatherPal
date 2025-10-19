@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.size
+import coil.compose.AsyncImage
 import com.example.weatherpal.R
 import com.example.weatherpal.TemperatureUnit
 import com.example.weatherpal.models.Current
@@ -42,7 +43,7 @@ fun CurrentWeatherScreen(weather: Weather?, unit: TemperatureUnit, modifier: Mod
 
 // Convert Celsius to Fahrenheit
 // source: https://www.w3resource.com/kotlin-exercises/basic/kotlin-basic-exercise-11.php
-fun toFahrenheit(celsius: Int): Int {
+fun toFahrenheit(celsius: Double): Int {
     return ((celsius * 9.0 / 5.0) + 32).toInt()
 }
 
@@ -66,7 +67,9 @@ fun Background(){
 fun Title(){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().padding(top = 100.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 100.dp),
     ) {
         Spacer(modifier = Modifier.height(LocalConfiguration.current.screenHeightDp.dp * 0.06f))
         Text(
@@ -123,9 +126,9 @@ fun CurrentWeather(current: Current?, unit: TemperatureUnit) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        Image(
-            painter = painterResource(id = current.weatherIcon),
-            contentDescription = "Weather condition icon",
+        AsyncImage(
+            model = "https:${current.condition.icon}", // URLs from WeatherAPI sometimes miss the protocol
+            contentDescription = current.condition.text,
             modifier = Modifier.size(100.dp)
         )
 
@@ -149,7 +152,7 @@ fun CurrentWeather(current: Current?, unit: TemperatureUnit) {
         )
         {
             val weatherInfo = listOf(
-                "Condition" to current.condition,
+                "Condition" to current.condition.text,
                 "Wind Speed" to "${current.windSpeed} km/h ${current.windDirection}",
                 "Precipitation" to current.precipitation
             )
