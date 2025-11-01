@@ -41,7 +41,7 @@ fun DailyForecastScreen(weather: Weather?, unit: TemperatureUnit){
     Box(modifier = Modifier.fillMaxSize()) {
         Background()
         Title()
-        ForecastTable(forecastDayList = weather?.forecast?.forecastDay, unit = unit)
+        ForecastTable(forecastDayList = weather?.forecast?.forecastDays, unit = unit)
     }
 }
 
@@ -107,11 +107,6 @@ fun ForecastTable(forecastDayList: List<ForecastDay>?, unit: TemperatureUnit) {
                             text = day.condition.text,
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
-                        //Precipitation type
-//                        Text(
-//                            text = forecastItem.precipitationType,
-//                            modifier = Modifier.padding(bottom = 12.dp)
-//                        )
                         //Precipitation amount and probability
                         Text(
                             text = "${day.precipitationAmount}mm (${day.precipitationProbability}%)",
@@ -122,11 +117,7 @@ fun ForecastTable(forecastDayList: List<ForecastDay>?, unit: TemperatureUnit) {
                             text = "${day.windSpeed} km/h",
                             modifier = Modifier.padding(bottom = 12.dp)
                         )
-                        //Wind direction
-//                        Text(
-//                            text = day.windDirection,
-//                            modifier = Modifier.padding(bottom = 12.dp)
-//                        )
+
                         //Humidity
                         Text(
                             text = "${day.humidity}% humidity",

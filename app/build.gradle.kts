@@ -70,7 +70,16 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    // Retrofit GSON Converter
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+//    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+//    // Retrofit GSON Converter
+//    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
+//    // Retrofit for networking
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Google Play location service
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
+// Accompanist permissions - makes getting permissions easier
+    implementation ("com.google.accompanist:accompanist-permissions:0.37.3")
 }

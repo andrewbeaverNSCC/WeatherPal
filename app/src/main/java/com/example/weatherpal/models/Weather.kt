@@ -7,7 +7,13 @@ import java.time.LocalDate
 
 data class Weather(
     val current: Current,
-    val forecast: Forecast
+    val forecast: Forecast,
+    val location: Location,
+    val alerts: Alerts
+)
+
+data class Location(
+    val name: String
 )
 
 data class Current(
@@ -27,11 +33,8 @@ data class Condition(
 )
 
 data class Forecast(
-    @SerializedName("forecastday") val forecastDay: List<ForecastDay>
+    @SerializedName("forecastday") val forecastDays: List<ForecastDay>
 )
-
-
-
 
 data class Day(
     @SerializedName("maxtemp_c") val highTemp: Double,
@@ -47,4 +50,17 @@ data class Day(
 data class ForecastDay(
     val date: String,
     val day: Day
+)
+
+data class Alert(
+    val headline: String,
+    val event: String,
+    val effective: String,
+    val expires: String,
+    @SerializedName("desc") val description: String,
+    val instruction: String
+)
+
+data class Alerts(
+    @SerializedName("alert") val alertList: List<Alert>
 )

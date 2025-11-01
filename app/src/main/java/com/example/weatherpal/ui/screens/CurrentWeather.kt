@@ -154,7 +154,7 @@ fun CurrentWeather(current: Current?, unit: TemperatureUnit) {
             val weatherInfo = listOf(
                 "Condition" to current.condition.text,
                 "Wind Speed" to "${current.windSpeed} km/h ${current.windDirection}",
-                "Precipitation" to current.precipitation
+                "Precipitation" to "${current.precipitation}mm"
             )
             weatherInfo.forEach { (label, value) ->
                 Row(
